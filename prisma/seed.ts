@@ -8,28 +8,36 @@ async function main() {
 	const password1 = await bcrypt.hash("password123", 10);
 	const password2 = await bcrypt.hash("password456", 10);
 	const password3 = await bcrypt.hash("password789", 10);
+	const password4 = await bcrypt.hash("yuzu217", 10);
 
 	const users = [
 		{
 			name: "Alice",
-			email: "alice@example.com",
+			email: "alice@gmail.com",
 			password: password1,
 			role: "user",
 			phoneNumber: "78901567",
 		},
 		{
 			name: "Bob",
-			email: "bob@example.com",
+			email: "bob@gmail.com",
 			password: password2,
 			role: "admin",
 			phoneNumber: "88015676",
 		},
 		{
 			name: "Charlie",
-			email: "charlie@example.com",
+			email: "charlie@gmail.com",
 			password: password3,
 			role: "user",
 			phoneNumber: "85417865",
+		},
+		{
+			name: "Yuzu",
+			email: "likehan217@gmail.com",
+			password: password4,
+			role: "admin",
+			phoneNumber: "84072167",
 		},
 	];
 

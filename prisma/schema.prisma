@@ -19,5 +19,7 @@ model User {
   updatedAt   DateTime @updatedAt
   role        String   @default("user")
   phoneNumber String?
+  resetToken       String?   
+  resetTokenExpiry DateTime? 
 }
 

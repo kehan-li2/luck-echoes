@@ -1,41 +1,36 @@
+// app/api/users/resetPassword/route.ts
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import prisma from "../../../lib/prisma";
 
 export async function POST(req: Request) {
-	const { email, password, name } = await req.json();
+	const { token, password } = await req.json();
 
 	try {
-		// Check if user already exists
-		const existingUser = await prisma.user.findUnique({
-			where: { email },
-		});
+		const user = await prisma.user.findFirst({ where: { resetToken: token } });
 
-		if (existingUser) {
+		if (!user) {
 			return NextResponse.json(
-				{ message: "User already exists" },
+				{ message: "Invalid or expired token" },
 				{ status: 400 }
 			);
 		}
 
-		// Hash the password
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		// Create new user
-		const user = await prisma.user.create({
+		await prisma.user.update({
+			where: { email: user.email },
 			data: {
-				email,
 				password: hashedPassword,
-				name,
+				resetToken: null, // Clear the token after successful reset
 			},
 		});
 
 		return NextResponse.json(
-			{ message: "User registered successfully", user },
-			{ status: 201 }
+			{ message: "Password reset successful" },
+			{ status: 200 }
 		);
 	} catch (err) {
-		console.error("Registration error:", err);
 		return NextResponse.json({ message: "Server error" }, { status: 500 });
 	}
 }
