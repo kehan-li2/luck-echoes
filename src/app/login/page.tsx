@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { axios, AxiosError } from 'axios';
-
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 interface LoginResponse {

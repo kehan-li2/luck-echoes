@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
-import Link from "next/link";
 
 export async function POST(req: Request) {
 	const { email } = await req.json();
@@ -48,8 +47,8 @@ export async function POST(req: Request) {
 		});
 
 		return NextResponse.json({ message: "Reset link sent" });
-	} catch (error) {
-		console.error(error);
+	} catch (err) {
+		console.error("Error:", err);
 		return NextResponse.json({ message: "Server error" }, { status: 500 });
 	}
 }
