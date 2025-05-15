@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from 'react';
-import axios from 'axios';
+import { axios, AxiosError } from 'axios';
+
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
 interface LoginResponse {
   token: string;
 }
@@ -28,7 +28,7 @@ const LoginPage = () => {
 
       localStorage.setItem('token', response.data.token);
       router.push('/home');
-    } catch (err: any) {
+    } catch (err: AxiosError) {
       setError(err.response?.data.message || 'Login failed');
     }
   };

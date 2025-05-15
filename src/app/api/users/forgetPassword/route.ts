@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
+import Link from "next/link";
 
 export async function POST(req: Request) {
 	const { email } = await req.json();
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
 			html: `
         <p>You requested a password reset.</p>
         <p>Click the link below to reset your password:</p>
-        <a href="${resetUrl}">${resetUrl}</a>
+        <Link href="${resetUrl}">${resetUrl}</Link>
         <p>This link will expire in 1 minute.</p>
       `,
 		});

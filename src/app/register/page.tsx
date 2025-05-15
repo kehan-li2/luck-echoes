@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from 'axios';
 import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
@@ -29,7 +29,7 @@ const RegisterPage = () => {
       setTimeout(() => {
         router.push("/login");
       }, 2000);
-    } catch (err: any) {
+    } catch (err: AxiosError) {
       setError(err.response?.data.message || "Registration failed");
     }
   };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from 'axios';
 import { useRouter, useSearchParams } from "next/navigation";
 
 const ForgotPasswordPage = () => {
@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
     try {
       await axios.post("/api/users/forgetPassword", { email });
       setMessage("Password reset link sent! Please check your email.");
-    } catch (err: any) {
+    } catch (err: AxiosError) {
       setError(err.response?.data.message || "Failed to send reset link");
     }
   };
@@ -57,10 +57,11 @@ const ForgotPasswordPage = () => {
       setTimeout(() => {
         router.push("/login");
       }, 3000);
-    } catch (err: any) {
+    } catch (err: AxiosError) {
       setError(err.response?.data.message || "Failed to reset password");
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-100 to-white">

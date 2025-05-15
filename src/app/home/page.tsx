@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { ShoppingCart, User } from 'lucide-react';
 import Button from '../components/button';
 import './home.css';
+import Link from 'next/link';
+
 
 
 
@@ -13,10 +15,10 @@ export default function HomePage() {
         <div className="flex items-center gap-4">
           <Image src="/logo.png" alt="Logo" width={100} height={100} />
           <nav className="flex gap-6 text-lg">
-            <a href="/" className="hover:text-purple-600">Home</a>
-            <a href="/charms" className="hover:text-purple-600">Charms</a>
-            <a href="/fortune" className="hover:text-purple-600">Fortune</a>
-            <a href="/about" className="hover:text-purple-600">About Us</a>
+            <Link href="/" className="hover:text-purple-600">Home</Link>
+            <Link href="/charms" className="hover:text-purple-600">Charms</Link>
+            <Link href="/fortune" className="hover:text-purple-600">Fortune</Link>
+            <Link href="/about" className="hover:text-purple-600">About Us</Link>
           </nav>
         </div>
         <div className="flex gap-6">
@@ -36,7 +38,7 @@ export default function HomePage() {
 
           <div className="flex gap-4 text-2xl">
             <Button className="bg-purple-800 text-white px-6 py-2 hover:bg-purple-900">
-              Today's Fortune
+              Today&apos;s Fortune
             </Button>
             <Button className="text-purple-800 hover:text-purple-600">
               Products →
