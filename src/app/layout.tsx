@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
+// main font style
 const dancingScript = Dancing_Script({
   subsets: ['latin'],
   weight: ['400', '700'],
