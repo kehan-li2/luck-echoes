@@ -36,10 +36,12 @@
 		"prisma": "^6.7.0",
 		"tailwindcss": "^4",
 		"ts-node": "^10.9.2",
+		"tsx": "^4.19.4",
 		"typescript": "^5.8.3"
 	},
 	"prisma": {
 		"schema": "./prisma/schema.prisma",
-		"seed": "ts-node ./prisma/seed.ts"
+		"seed": "tsx prisma/seed.ts"
 	}
+
 }
