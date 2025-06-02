@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
@@ -29,8 +29,12 @@ const RegisterPage = () => {
       setTimeout(() => {
         router.push("/login");
       }, 2000);
-    } catch (err: AxiosError) {
-      setError(err.response?.data.message || "Registration failed");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data.message || "Registration failed");
+      } else {
+        setError("Registration failed");
+      }
     }
   };
 
@@ -47,7 +51,7 @@ const RegisterPage = () => {
             value={email}
             required
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg w-full p-3 focus:ring-green-500"
           />
           <input
             type="password"
@@ -55,7 +59,7 @@ const RegisterPage = () => {
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg w-full p-3 focus:ring-green-500"
           />
           <input
             type="password"
@@ -63,11 +67,11 @@ const RegisterPage = () => {
             value={confirmPassword}
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg w-full p-3 focus:ring-green-500"
           />
           <button
             type="submit"
-            className="w-full p-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            className="bg-green-600 text-white w-full p-3 rounded-lg hover:bg-green-700"
           >
             Register
           </button>

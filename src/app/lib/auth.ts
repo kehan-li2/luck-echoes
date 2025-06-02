@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "";
 
 export const generateToken = (user: { id: string; email: string }) => {
 	return jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
-		expiresIn: "1w",
+		expiresIn: "7d",
 	});
 };
 

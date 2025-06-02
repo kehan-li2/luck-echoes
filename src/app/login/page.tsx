@@ -21,20 +21,25 @@ const LoginPage = () => {
       const response = await axios.post<LoginResponse>('/api/users/login', { email, password });
 
       if (!response.data.token) {
-        setError('Login failed: No token received');
+        setError('Login failed: No valid token');
         return;
       }
 
       localStorage.setItem('token', response.data.token);
-      router.push('/home');
-    } catch (err: AxiosError) {
-      setError(err.response?.data.message || 'Login failed');
+      router.push('/');
+
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data.message || 'Login failed');
+      } else {
+        setError('Login failed');
+      }
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-white">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg border border-gray-200">
+      <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg border border-blue-100">
         <h2 className="text-3xl font-bold text-center text-gray-800">Login</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleLogin} className="space-y-6">
@@ -44,7 +49,7 @@ const LoginPage = () => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="border rounded-lg w-full p-3 focus:ring-blue-500"
               required
             />
           </div>
@@ -54,14 +59,14 @@ const LoginPage = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 pr-10 mb-2"
+              className="border rounded-lg w-full p-3 focus:ring-blue-500 pr-10 mb-2"
               required
             />
             {/* Eye icon button */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900"
+              className="absolute right-3 top-1/4 text-gray-600 hover:text-gray-900"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
@@ -78,7 +83,7 @@ const LoginPage = () => {
               )}
             </button>
 
-            {/* Forgot password link at bottom right */}
+            {/* Forgot password link */}
             <Link
               href="/password"
               className="absolute right-0 bottom-[-1.25rem] text-sm text-blue-600 hover:underline"

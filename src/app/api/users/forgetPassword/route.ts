@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
 		const resetToken = crypto.randomBytes(32).toString("hex");
 
-		const expires = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
+		const expires = new Date(Date.now() + 1 * 60 * 1000); // set the link to 1 min expiry
 		await prisma.user.update({
 			where: { email },
 			data: { resetToken, resetTokenExpiry: expires },
@@ -31,11 +31,11 @@ export async function POST(req: Request) {
 		});
 
 		// Compose reset URL
-		const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/password?token=${resetToken}`;
+		const resetUrl = `${process.env.EMAIL_RESET_BASE_URL}/password?token=${resetToken}`;
 
 		// Send email
 		await transporter.sendMail({
-			from: '"Luck Echoes" <no-reply@yourapp.com>',
+			from: "Luck Echoes",
 			to: email,
 			subject: "Password Reset Request",
 			html: `

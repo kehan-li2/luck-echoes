@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 			where: { email: user.email },
 			data: {
 				password: hashedPassword,
-				resetToken: null, // Clear the token after successful reset
+				resetToken: null, // clear all the token after successful reset
 			},
 		});
 
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
 			{ status: 200 }
 		);
 	} catch (err) {
+		console.error("Registration error:", err);
 		return NextResponse.json({ message: "Server error" }, { status: 500 });
 	}
 }

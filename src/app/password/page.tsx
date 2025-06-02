@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useRouter, useSearchParams } from "next/navigation";
 
 const ForgotPasswordPage = () => {
@@ -31,8 +31,12 @@ const ForgotPasswordPage = () => {
     try {
       await axios.post("/api/users/forgetPassword", { email });
       setMessage("Password reset link sent! Please check your email.");
-    } catch (err: AxiosError) {
-      setError(err.response?.data.message || "Failed to send reset link");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data.message || "Failed to send reset link");
+      } else {
+        setError("Failed to send reset link");
+      }
     }
   };
 
@@ -56,9 +60,13 @@ const ForgotPasswordPage = () => {
       setMessage("Password reset successful! Redirecting to login...");
       setTimeout(() => {
         router.push("/login");
-      }, 3000);
-    } catch (err: AxiosError) {
-      setError(err.response?.data.message || "Failed to reset password");
+      }, 3000); // delay 3s then redirect to login page
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data.message || "Failed to reset password");
+      } else {
+        setError("Failed to reset password");
+      }
     }
   };
 
@@ -82,11 +90,11 @@ const ForgotPasswordPage = () => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500"
+              className="border rounded-lg w-full p-3 focus:ring-2 focus:ring-yellow-500"
             />
             <button
               type="submit"
-              className="w-full p-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
+              className="bg-yellow-600 w-full p-3 text-white rounded-lg hover:bg-yellow-700"
             >
               Send Reset Link
             </button>
@@ -100,7 +108,7 @@ const ForgotPasswordPage = () => {
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500"
+              className="border rounded-lg w-full p-3  focus:ring-yellow-500"
             />
             <input
               type="password"
@@ -108,11 +116,11 @@ const ForgotPasswordPage = () => {
               value={confirmPassword}
               required
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500"
+              className="border rounded-lg w-full p-3 focus:ring-yellow-500"
             />
             <button
               type="submit"
-              className="w-full p-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
+              className="w-full p-3 text-white rounded-lg bg-yellow-600 hover:bg-yellow-700"
             >
               Reset Password
             </button>
