@@ -12,14 +12,17 @@ datasource db {
 
 model User {
   id          String   @id @default(cuid())
-  name        String?
+  name        String
   email       String   @unique
   password    String
+  Bday        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   role        String   @default("user")
+  placeBorn   String?
   phoneNumber String?
-  resetToken       String?   
+  avatar      String?
+  resetToken  String?   
   resetTokenExpiry DateTime? 
 }
 
