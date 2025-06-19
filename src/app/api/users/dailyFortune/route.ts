@@ -5,8 +5,7 @@ import prisma from "../../../lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
-//const genAI = new GoogleGenAI("AIzaSyDsMf87ZAzDFUZHBnc1HQXmidOGDu8anhk");
-const ai = new GoogleGenAI({ apiKey: "AIzaSyDsMf87ZAzDFUZHBnc1HQXmidOGDu8anhk" });
+const ai = new GoogleGenAI({ apiKey: "apikey" });
 
 export async function POST(req: Request) {
   try {
