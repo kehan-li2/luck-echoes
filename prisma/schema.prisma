@@ -15,7 +15,7 @@ model User {
   name        String
   email       String   @unique
   password    String
-  Bday        DateTime
+  bday        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   role        String   @default("user")
