@@ -6,23 +6,33 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL") // uses connection pooling
+  url      = env("DATABASE_URL") // uses connection pooling
 }
-
 
 model User {
-  id          String   @id @default(cuid())
-  name        String
-  email       String   @unique
-  password    String
-  bday        DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  role        String   @default("user")
-  placeBorn   String?
-  phoneNumber String?
-  avatar      String?
-  resetToken  String?   
-  resetTokenExpiry DateTime? 
+  id               String    @id @default(cuid())
+  name             String
+  email            String    @unique
+  password         String
+  bday             DateTime
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  role             String    @default("user")
+  placeBorn        String?
+  phoneNumber      String?
+  avatar           String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+
+  fortunes Fortune[]
 }
 
+model Fortune {
+  id      String   @id @default(cuid())
+  userId  String
+  user    User     @relation(fields: [userId], references: [id])
+  date    DateTime @default(now())
+  content String
+
+  @@unique([userId, date])
+}
