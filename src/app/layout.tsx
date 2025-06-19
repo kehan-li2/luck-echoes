@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Dancing_Script } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+import { Providers } from "./providers";
 import "./globals.css";
 
 // main font style
@@ -34,7 +36,7 @@ export default function RootLayout({
       <body
         className={dancingScript.className}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

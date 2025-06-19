@@ -3,9 +3,12 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const RegisterPage = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [bday, setBday] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,30 +16,37 @@ const RegisterPage = () => {
   const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+  if (password !== confirmPassword) {
+    setError("Passwords do not match");
+    return;
+  }
 
-    try {
-      // Call your register API here
-      await axios.post("/api/users/register", { email, password });
-      setSuccess("Registration successful! Redirecting to login...");
-      setTimeout(() => {
-        router.push("/login");
-      }, 2000);
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data.message || "Registration failed");
-      } else {
-        setError("Registration failed");
-      }
+  try {
+    await axios.post("/api/users/register", {
+      name,
+      email,
+      password,
+      bday: new Date(bday),
+    });
+
+    setSuccess("Registration successful! Please login.");
+    setTimeout(() => {
+      router.push("/login");
+    }, 1500);
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      setError(err.response?.data.message || "Registration failed");
+    } else {
+      setError("Registration failed");
     }
-  };
+  }
+};
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 to-white">
@@ -46,11 +56,26 @@ const RegisterPage = () => {
         {success && <p className="text-green-600 text-center">{success}</p>}
         <form onSubmit={handleRegister} className="space-y-6">
           <input
+            type="text"
+            placeholder="User Name"
+            value={name}
+            required
+            onChange={(e) => setName(e.target.value)}
+            className="border rounded-lg w-full p-3 focus:ring-green-500"
+          />
+          <input
             type="email"
             placeholder="Email"
             value={email}
             required
             onChange={(e) => setEmail(e.target.value)}
+            className="border rounded-lg w-full p-3 focus:ring-green-500"
+          />
+          <input
+            type="date"
+            value={bday}
+            required
+            onChange={(e) => setBday(e.target.value)}
             className="border rounded-lg w-full p-3 focus:ring-green-500"
           />
           <input
