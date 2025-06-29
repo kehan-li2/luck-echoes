@@ -60,11 +60,16 @@ const CharmsPage = () => {
   const [savedProducts, setSavedProducts] = useState<number[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("savedProducts");
-    if (stored) {
-      setSavedProducts(JSON.parse(stored));
+    try {
+      const saved = JSON.parse(localStorage.getItem("savedProducts") || "[]");
+      if (Array.isArray(saved)) {
+        setSavedProducts(saved);
+      }
+    } catch (err) {
+      console.error("Error loading saved products from the localStorage", err);
     }
   }, []);
+
 
   const addToSave = (id: number) => {
     setSavedProducts((prev) => {
@@ -75,7 +80,13 @@ const CharmsPage = () => {
       localStorage.setItem("savedProducts", JSON.stringify(updated));
       return updated;
     });
+
   };
+
+  // to notify the changes for products saved
+  useEffect(() => {
+    window.dispatchEvent(new Event("savedProductsUpdated"));
+  }, [savedProducts]);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

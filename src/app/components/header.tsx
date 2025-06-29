@@ -5,14 +5,17 @@ import { ShoppingCart, User, Heart } from 'lucide-react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function Header() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const currentPath = usePathname(); // get current path
+  const currentPath = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // State to hold saved count and trigger re-render safely on client
+  const [savedItemsCount, setSavedItemsCount] = useState(0);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -25,16 +28,32 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const savedItemsCount = typeof window !== 'undefined'
-    ? JSON.parse(localStorage.getItem('savedProducts') || '[]').length
-    : 0;
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
 
+    const saved = JSON.parse(localStorage.getItem('savedProducts') || '[]');
+    setSavedItemsCount(saved.length);
+
+    const updateSavedCount = () => {
+      const saved = JSON.parse(localStorage.getItem('savedProducts') || '[]');
+      setSavedItemsCount(saved.length);
+    };
+
+    window.addEventListener('savedProductsUpdated', updateSavedCount);
+
+    // remove it after updated
+    return () => {
+      window.removeEventListener('savedProductsUpdated', updateSavedCount);
+    };
+  }, []);
+
+
+  // For logout
   const handleLogout = async () => {
     setMenuOpen(false);
     await signOut({ callbackUrl: '/' });
   };
 
-  {/*  make it easy to add more options for future */ }
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/charms', label: 'Charms' },
@@ -51,10 +70,7 @@ export default function Header() {
             <Link
               key={href}
               href={href}
-              className={`hover ${currentPath === href
-                ? 'text-[#9F78FF]'
-                : 'text-gray-700'
-                }`}
+              className={`hover ${currentPath === href ? 'text-[#9F78FF]' : 'text-gray-700'}`}
             >
               {label}
             </Link>
