@@ -58,10 +58,23 @@ const CharmsPage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [filterOpen, setFilterOpen] = useState(false);
   const [savedProducts, setSavedProducts] = useState<number[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("savedProducts");
+    if (stored) {
+      setSavedProducts(JSON.parse(stored));
+    }
+  }, []);
+
   const addToSave = (id: number) => {
-    setSavedProducts((prev) =>
-      prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
-    );
+    setSavedProducts((prev) => {
+      const updated = prev.includes(id)
+        ? prev.filter((pid) => pid !== id)
+        : [...prev, id];
+
+      localStorage.setItem("savedProducts", JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);

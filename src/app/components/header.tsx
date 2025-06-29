@@ -1,7 +1,7 @@
 "use client";
 
 import Image from 'next/image';
-import { ShoppingCart, User } from 'lucide-react';
+import { ShoppingCart, User, Heart } from 'lucide-react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
@@ -24,6 +24,10 @@ export default function Header() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const savedItemsCount = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('savedProducts') || '[]').length
+    : 0;
 
   const handleLogout = async () => {
     setMenuOpen(false);
@@ -59,6 +63,15 @@ export default function Header() {
       </div>
 
       <div className="flex gap-6 items-center relative pr-10">
+        <div className="relative cursor-pointer" onClick={() => router.push('/saved')}>
+          <Heart className="w-6 h-6 text-gray-600 hover" />
+          {savedItemsCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {savedItemsCount}
+            </span>
+          )}
+        </div>
+
         <ShoppingCart className="w-6 h-6 text-gray-600 hover cursor-pointer" />
 
         {status === "loading" ? (
