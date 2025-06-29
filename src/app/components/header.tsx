@@ -4,12 +4,13 @@ import Image from 'next/image';
 import { ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Header() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const currentPath = usePathname(); // get current path
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -29,15 +30,31 @@ export default function Header() {
     await signOut({ callbackUrl: '/' });
   };
 
+  {/*  make it easy to add more options for future */ }
+  const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/charms', label: 'Charms' },
+    { href: '/dailyfortune', label: 'Fortune' },
+    { href: '/about', label: 'About Us' },
+  ];
+
   return (
     <header className="flex justify-between items-center px-4 py-1 bg-white shadow-md relative font-semibold">
       <div className="flex items-center justify-between w-full px-4 pr-10 relative">
         <Image src="/logo.png" alt="Logo" width={100} height={100} />
         <nav className="flex gap-6 text-xl font-main mt-2">
-          <Link href="/" className="hover">Home</Link>
-          <Link href="/charms" className="hover">Charms</Link>
-          <Link href="/fortune" className="hover">Fortune</Link>
-          <Link href="/about" className="hover">About Us</Link>
+          {navLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`hover ${currentPath === href
+                ? 'text-[#9F78FF]'
+                : 'text-gray-700'
+                }`}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
 
