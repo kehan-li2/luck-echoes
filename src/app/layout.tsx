@@ -1,25 +1,31 @@
 import type { Metadata } from "next";
-import { Dancing_Script } from "next/font/google";
+import { Old_Standard_TT, Caveat, Roboto } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Providers } from "./providers";
 import "./globals.css";
 
+
 // main font style
-const dancingScript = Dancing_Script({
+const mainScript = Old_Standard_TT({
   subsets: ['latin'],
   weight: ['400', '700'],
+  variable: "--font-main",
 });
 
-// Geist, Geist_Mono,
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
+// caption font style
+const captionScript = Caveat({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: "--font-caption",
+});
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+// decription font style
+const textScript = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: "--font-text",
+});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,9 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={dancingScript.className}
-      >
+      <body className={`${mainScript.variable} ${captionScript.variable} ${textScript.variable} font-main`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -32,10 +32,10 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-white to-purple-50">
       {/* Top Navigation Bar */}
-      <header className="flex justify-between items-center px-4 py-2 bg-white shadow-md relative">
-        <div className="flex items-center gap-4">
+      <header className="flex justify-between items-center px-4 py-1 bg-white shadow-md relative font-semibold">
+        <div className="flex items-center justify-between w-full px-4 pr-10 relative">
           <Image src="/logo.png" alt="Logo" width={100} height={100} />
-          <nav className="flex gap-6 text-lg">
+          <nav className="flex gap-6 text-xl font-main mt-2">
             <Link href="/" className="hover">Home</Link>
             <Link href="/charms" className="hover">Charms</Link>
             <Link href="/fortune" className="hover">Fortune</Link>
@@ -43,7 +43,7 @@ const HomePage = () => {
           </nav>
         </div>
 
-        <div className="flex gap-6 items-center relative">
+        <div className="flex gap-6 items-center relative pr-10">
           <ShoppingCart className="w-6 h-6 text-gray-600 hover cursor-pointer" />
 
           {status === "loading" ? (
@@ -80,44 +80,63 @@ const HomePage = () => {
         </div>
       </header>
 
-      {/* Main Section */}
-      <main className="ml-10 p-10 flex gap-10 justify-center items-center">
-        <div className="flex-1">
-          <h1 className="text-6xl font-bold mb-4 text-left leading-[1.3]">
+      <main className="ml-14 px-6 py-10 flex flex-col lg:flex-row items-center justify-between min-h-[75vh]">
+        {/* Left Section, then welcome text */}
+        <div className="w-full lg:w-1/2 ml-15 mb-10 lg:mb-0">
+          <h1 className="lg:mb-15 sm:mb-5 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-caption italic ">
             Wear Fortune <br />
             Whispers,<br />
             Luck Echoes
           </h1>
 
-          <div className="flex gap-4 text-2xl">
-            <Link href="/dailyfortune" className="hover">
-              <button className="bg-purple-800 text-white px-6 py-2 hover:bg-purple-900">
+          <div className="flex gap-4 text-xl font-main sm:mb-5">
+            <Link href="/dailyfortune">
+              <button className="bg-purple-400 text-white px-6 py-2 rounded-lg hover:bg-purple-500">
                 Today&apos;s Fortune
               </button>
             </Link>
-            <button className="text-purple-400 hover">
+            <button className="text-purple-400 hover:text-purple-500">
               Products →
             </button>
           </div>
         </div>
 
-        <div className="flex-1 grid grid-cols-2 gap-4 items-start">
-          <Image
-            src="/j1.jpg"
-            alt="Product Large"
-            width={400}
-            height={800}
-            className="homeImage"
-          />
-          <Image
-            src="/j2.png"
-            alt="Product Small"
-            width={300}
-            height={600}
-            className="homeImage self-end"
-          />
+        <Image
+          src="/dog.png"
+          alt="Pet dog"
+          width={300}
+          height={300}
+          className="absolute transform translate-x-[170%]"
+        />
+
+
+        {/* Right Section, images */}
+        <div className="w-full lg:w-1/2 flex items-end gap-3">
+          {/* Left Big Image */}
+          <div className="relative h-[70vh] basis-3/5 lg:mt-10 sm:mt-5">
+            <Image
+              src="/p1.png"
+              alt="Product Large"
+              width={400}
+              height={1000}
+              className="w-full h-full rounded-bl-[176px]"
+            />
+            <div className="border-[#414BB6] absolute inset-0 transform translate-x-7 -translate-y-7 border-2 border-btn-border rounded-bl-[176px] rounded-tr-[176px]" />
+          </div>
+
+          {/* Right Small Image */}
+          <div className="basis-2/5 h-[42vh] flex items-end">
+            <Image
+              src="/p2.png"
+              alt="Product Small"
+              width={200}
+              height={400}
+              className="w-full h-full rounded-tr-[176px]"
+            />
+          </div>
         </div>
       </main>
+
     </div>
   );
 };
