@@ -16,6 +16,7 @@ export default function Header() {
 
   // State to hold saved count and trigger re-render safely on client
   const [savedItemsCount, setSavedItemsCount] = useState(0);
+  const [addToBag, setAddToBag] = useState(0);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -44,6 +45,25 @@ export default function Header() {
     // remove it after updated
     return () => {
       window.removeEventListener('savedProductsUpdated', updateSavedCount);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const saved = JSON.parse(localStorage.getItem('bagItems') || '[]');
+    setAddToBag(saved.length);
+
+    const updateSavedCount = () => {
+      const saved = JSON.parse(localStorage.getItem('bagItems') || '[]');
+      setAddToBag(saved.length);
+    };
+
+    window.addEventListener('bagItemsUpdated', updateSavedCount);
+
+    // remove it after updated
+    return () => {
+      window.removeEventListener('bagItemsUpdated', updateSavedCount);
     };
   }, []);
 
@@ -79,7 +99,7 @@ export default function Header() {
       </div>
 
       <div className="flex gap-6 items-center relative pr-10">
-        <div className="relative cursor-pointer" onClick={() => router.push('/saved')}>
+        <div className="relative cursor-pointer" onClick={() => { }}>
           <Heart className="w-6 h-6 text-gray-600 hover" />
           {savedItemsCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
@@ -88,7 +108,15 @@ export default function Header() {
           )}
         </div>
 
-        <ShoppingCart className="w-6 h-6 text-gray-600 hover cursor-pointer" />
+        <div className="relative cursor-pointer" onClick={() => { }}>
+          <ShoppingCart className="w-6 h-6 text-gray-600 hover cursor-pointer" />
+          {addToBag > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {addToBag}
+            </span>
+          )}
+        </div>
+
 
         {status === "loading" ? (
           <div className="w-6 h-6 animate-spin border-2 border-gray-400 border-t-transparent rounded-full" />

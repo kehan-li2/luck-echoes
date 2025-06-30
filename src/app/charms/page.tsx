@@ -205,6 +205,7 @@ const CharmsPage = () => {
               const discountPrice = discount ? price * (1 - discount / 100) : price;
 
               return (
+
                 <div
                   key={id}
                   className="relative bg-white rounded-lg shadow-md p-8 flex flex-col"
@@ -222,21 +223,23 @@ const CharmsPage = () => {
                     )}
                   </button>
 
-                  <div className="overflow-hidden bg-gray-100 relative w-full mb-10 rounded-md ">
-                    <Image
-                      src={pic}
-                      alt="Product Image"
-                      width={800}
-                      height={800}
-                      className="object-cover"
-                    />
+                  <Link href={`/products/${id}`}>
+                    <div className="overflow-hidden bg-gray-100 relative w-full mb-10 rounded-md ">
+                      <Image
+                        src={pic}
+                        alt="Product Image"
+                        width={800}
+                        height={800}
+                        className="object-cover"
+                      />
 
-                    {discount > 0 && (
-                      <span className="absolute bottom-2 left-2 text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
-                        {discount}% OFF
-                      </span>
-                    )}
-                  </div>
+                      {discount > 0 && (
+                        <span className="absolute bottom-2 left-2 text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
+                          {discount}% OFF
+                        </span>
+                      )}
+                    </div>
+                  </Link>
 
                   {/* product details */}
                   <h3 className="text-lg font-text mb-1 text-left">{name}</h3>
