@@ -1,7 +1,7 @@
 // /app/api/fortune/route.ts
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
-import prisma from "../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 import { getServerSession } from "next-auth";
 // @ts-expect-error authOptions
 import { authOptions } from "../../auth/[...nextauth]/route";

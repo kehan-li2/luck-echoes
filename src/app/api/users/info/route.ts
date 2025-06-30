@@ -2,7 +2,7 @@
 import { getServerSession } from "next-auth";
 // @ts-expect-error authOptions
 import { authOptions } from "../../auth/[...nextauth]/route";
-import prisma from "../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
