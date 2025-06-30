@@ -53,11 +53,21 @@ const products = [
 
 ];
 
-
 const CharmsPage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [filterOpen, setFilterOpen] = useState(false);
   const [savedProducts, setSavedProducts] = useState<number[]>([]);
+  const [filterOption, setFilterOption] = useState('');
+
+  // this are the data to be displayed
+  const displayedProducts = filterOption
+    ? [...products].sort((a, b) => {
+      if (filterOption === "lowToHigh") return a.price - b.price;
+      if (filterOption === "highToLow") return b.price - a.price;
+      if (filterOption === "discount") return b.discount - a.discount;
+      return 0;
+    })
+    : products;
 
   useEffect(() => {
     try {
@@ -143,17 +153,46 @@ const CharmsPage = () => {
                 onClick={() => setFilterOpen((prev) => !prev)}
                 className="flex items-center bg-amber-50 px-4 py-2 rounded-md hover:bg-[#9F78FF] hover:text-white"
               >
-                Sort by
-                <ChevronDown className="w-4 h-4" />
+                {filterOption
+                  ? filterOption === "lowToHigh"
+                    ? "Price: Low to High"
+                    : filterOption === "highToLow"
+                      ? "Price: High to Low"
+                      : "Discount"
+                  : "Sort by"}
+                <ChevronDown className="w-4 h-4 ml-2" />
               </button>
 
               {filterOpen && (
-                <div className="absolute bg-white shadow-lg z-1 right-0 mt-2 w-48">
+                <div className="absolute bg-white shadow-lg z-10 right-0 mt-2 w-48">
                   <ul>
-                    <li className="px-4 py-2 hover:bg-purple-100 cursor-pointer">Price: Low to High</li>
-                    <li className="px-4 py-2 hover:bg-purple-100 cursor-pointer">Price: High to Low</li>
-                    <li className="px-4 py-2 hover:bg-purple-100 cursor-pointer">Newest Arrivals</li>
-                    <li className="px-4 py-2 hover:bg-purple-100 cursor-pointer">Discount</li>
+                    <li
+                      onClick={() => {
+                        setFilterOption("lowToHigh");
+                        setFilterOpen(false);
+                      }}
+                      className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
+                    >
+                      Price: Low to High
+                    </li>
+                    <li
+                      onClick={() => {
+                        setFilterOption("highToLow");
+                        setFilterOpen(false);
+                      }}
+                      className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
+                    >
+                      Price: High to Low
+                    </li>
+                    <li
+                      onClick={() => {
+                        setFilterOption("discount");
+                        setFilterOpen(false);
+                      }}
+                      className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
+                    >
+                      Discount
+                    </li>
                   </ul>
                 </div>
               )}
@@ -162,7 +201,7 @@ const CharmsPage = () => {
 
           {/* Products list */}
           <div className="mb-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map(({ id, price, name, discount, description, pic }) => {
+            {displayedProducts.map(({ id, price, name, discount, description, pic }) => {
               const discountPrice = discount ? price * (1 - discount / 100) : price;
 
               return (
