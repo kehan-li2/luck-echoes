@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import prisma from "../../../../lib/prisma";
 import { getServerSession } from "next-auth";
-// @ts-expect-error authOptions
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const ai = new GoogleGenAI({ apiKey: "apikey" });
 
