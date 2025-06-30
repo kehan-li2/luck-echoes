@@ -3,7 +3,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -16,35 +16,35 @@ const RegisterPage = () => {
   const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-  if (password !== confirmPassword) {
-    setError("Passwords do not match");
-    return;
-  }
-
-  try {
-    await axios.post("/api/users/register", {
-      name,
-      email,
-      password,
-      bday: new Date(bday),
-    });
-
-    setSuccess("Registration successful! Please login.");
-    setTimeout(() => {
-      router.push("/login");
-    }, 1500);
-  } catch (err: unknown) {
-    if (axios.isAxiosError(err)) {
-      setError(err.response?.data.message || "Registration failed");
-    } else {
-      setError("Registration failed");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
     }
-  }
-};
+
+    try {
+      await axios.post("/api/users/register", {
+        name,
+        email,
+        password,
+        bday: new Date(bday),
+      });
+
+      setSuccess("Registration successful! Please login.");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data.message || "Registration failed");
+      } else {
+        setError("Registration failed");
+      }
+    }
+  };
 
 
 

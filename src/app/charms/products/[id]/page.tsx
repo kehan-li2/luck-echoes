@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Heart } from "lucide-react";
 import Image from 'next/image';
-import Link from 'next/link';
-import Header from "../../components/header";
+// import Link from 'next/link';
+import Header from "../../../components/header";
 
 const categories = ["SALE", "Necklace", "Bracelet", "Phone Accessories", "Crystals", "Candles", "Essential Oils"];
 const mockProduct = {

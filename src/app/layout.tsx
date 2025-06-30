@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Old_Standard_TT, Caveat, Roboto } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
+// import { SessionProvider } from "next-auth/react";
 import { Providers } from "./providers";
 import "./globals.css";
 

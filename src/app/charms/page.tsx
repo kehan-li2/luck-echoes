@@ -223,7 +223,7 @@ const CharmsPage = () => {
                     )}
                   </button>
 
-                  <Link href={`/products/${id}`}>
+                  <Link href={`charms/products/${id}`}>
                     <div className="overflow-hidden bg-gray-100 relative w-full mb-10 rounded-md ">
                       <Image
                         src={pic}

@@ -37,7 +37,7 @@ const DailyFortunePage = () => {
         } else {
           setError(data.message || "Failed to fetch fortune.");
         }
-      } catch (err) {
+      } catch {
         setError("An unexpected error occurred.");
       } finally {
         setLoading(false);

@@ -107,9 +107,9 @@ const HomePage = () => {
           <div className=" p-20 flex flex-col lg:flex-row items-center bg-[#FFFBF4] rounded-[100px]">
             {/* descriptions */}
             <div className="w-full lg:w-1/2 h-full justify-center flex flex-col">
-              <h2 className="text-5xl font-bold font-main mb-6">Today's Mood: <span className='text-blue-400 text-6xl ml-5'>82 points</span></h2>
+              <h2 className="text-5xl font-bold font-main mb-6">Today&apos;s Mood: <span className='text-blue-400 text-6xl ml-5'>82 points</span></h2>
               <p className="text-gray-500 font-text text-2xl">
-                Today's mood feels dreamy yet grounded, like walking through soft morning light with a heart full of quiet optimism. You're likely feeling warm and reflective—creative ideas may flow easily, and there's a sense of emotional clarity. It's a good day to lean into beauty, expression, and gentle connection with others.
+                Today&apos;s mood feels dreamy yet grounded, like walking through soft morning light with a heart full of quiet optimism. You&apos;re likely feeling warm and reflective—creative ideas may flow easily, and there&apos;s a sense of emotional clarity. It&apos;s a good day to lean into beauty, expression, and gentle connection with others.
               </p>
             </div>
 

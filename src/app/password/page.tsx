@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from 'axios';
+import { useState, useEffect, Suspense } from "react";
+import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const ForgotPasswordPage = () => {
+const PasswordFormContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [isResetMode, setIsResetMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isResetMode, setIsResetMode] = useState(false);
+
   const token = searchParams.get("token");
 
   useEffect(() => {
@@ -22,25 +24,26 @@ const ForgotPasswordPage = () => {
     }
   }, [token]);
 
-  // Handle Request Password Reset
   const handleRequestReset = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setMessage("");
+    setIsLoading(true);
 
     try {
       await axios.post("/api/users/forgetPassword", { email });
       setMessage("Password reset link sent! Please check your email.");
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data.message || "Failed to send reset link");
-      } else {
-        setError("Failed to send reset link");
-      }
+      setError(
+        axios.isAxiosError(err)
+          ? err.response?.data.message || "Failed to send reset link"
+          : "Failed to send reset link"
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Handle Password Reset
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -51,25 +54,21 @@ const ForgotPasswordPage = () => {
       return;
     }
 
+    setIsLoading(true);
     try {
-      await axios.post("/api/users/resetPassword", {
-        token,
-        password,
-      });
-
+      await axios.post("/api/users/resetPassword", { token, password });
       setMessage("Password reset successful! Redirecting to login...");
-      setTimeout(() => {
-        router.push("/login");
-      }, 3000); // delay 3s then redirect to login page
+      setTimeout(() => router.push("/login"), 3000);
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data.message || "Failed to reset password");
-      } else {
-        setError("Failed to reset password");
-      }
+      setError(
+        axios.isAxiosError(err)
+          ? err.response?.data.message || "Failed to reset password"
+          : "Failed to reset password"
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-100 to-white">
@@ -78,56 +77,89 @@ const ForgotPasswordPage = () => {
           {isResetMode ? "Reset Password" : "Forgot Password"}
         </h2>
 
-        {message && <p className="text-green-600 text-center">{message}</p>}
-        {error && <p className="text-red-500 text-center">{error}</p>}
+        {message && (
+          <p className="text-green-600 text-center p-2 bg-green-50 rounded">
+            {message}
+          </p>
+        )}
+        {error && (
+          <p className="text-red-500 text-center p-2 bg-red-50 rounded">
+            {error}
+          </p>
+        )}
 
         {!isResetMode ? (
-          // Request Reset Link Form
           <form onSubmit={handleRequestReset} className="space-y-6">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              className="border rounded-lg w-full p-3 focus:ring-2 focus:ring-yellow-500"
-            />
+            <div>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                required
+                autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
+                className="border rounded-lg w-full p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              />
+            </div>
             <button
               type="submit"
-              className="bg-yellow-600 w-full p-3 text-white rounded-lg hover:bg-yellow-700"
+              disabled={isLoading}
+              className={`w-full p-3 text-white rounded-lg ${isLoading ? "bg-yellow-400" : "bg-yellow-600 hover:bg-yellow-700"
+                } transition-colors`}
             >
-              Send Reset Link
+              {isLoading ? "Sending..." : "Send Reset Link"}
             </button>
           </form>
         ) : (
-          // Reset Password Form
           <form onSubmit={handleResetPassword} className="space-y-6">
-            <input
-              type="password"
-              placeholder="New Password"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              className="border rounded-lg w-full p-3  focus:ring-yellow-500"
-            />
-            <input
-              type="password"
-              placeholder="Confirm New Password"
-              value={confirmPassword}
-              required
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="border rounded-lg w-full p-3 focus:ring-yellow-500"
-            />
+            <div>
+              <input
+                type="password"
+                placeholder="New Password"
+                value={password}
+                required
+                minLength={8}
+                autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
+                className="border rounded-lg w-full p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Confirm New Password"
+                value={confirmPassword}
+                required
+                minLength={8}
+                autoComplete="new-password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="border rounded-lg w-full p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              />
+            </div>
             <button
               type="submit"
-              className="w-full p-3 text-white rounded-lg bg-yellow-600 hover:bg-yellow-700"
+              disabled={isLoading}
+              className={`w-full p-3 text-white rounded-lg ${isLoading ? "bg-yellow-400" : "bg-yellow-600 hover:bg-yellow-700"
+                } transition-colors`}
             >
-              Reset Password
+              {isLoading ? "Resetting..." : "Reset Password"}
             </button>
           </form>
         )}
       </div>
     </div>
+  );
+};
+
+const ForgotPasswordPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <PasswordFormContent />
+    </Suspense>
   );
 };
 
