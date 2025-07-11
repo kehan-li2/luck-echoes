@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Luck Echoes Pet",
+  "version": "1.0",
+  "description": "Your daily fortune pet companion from Luck Echoes.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/pet48.png"
+    }
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["http://localhost:3000/*"]
+}
