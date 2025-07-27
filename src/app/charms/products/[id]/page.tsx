@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Heart } from "lucide-react";
 import Image from 'next/image';
-// import Link from 'next/link';
 import Header from "../../../components/header";
+import SubNavbar from "../../../components/subnavbar";
+import { useSearchParams } from "next/navigation";
 
-const categories = ["SALE", "Necklace", "Bracelet", "Phone Accessories", "Crystals", "Candles", "Essential Oils"];
 const mockProduct = {
   id: 1,
   name: "Moonlit Serenity Bracelet",
@@ -25,15 +25,16 @@ const mockProduct = {
   ],
 };
 
-
 const ProductPage = () => {
-  const [activeTab, setActiveTab] = useState(0);
   const [savedProducts, setSavedProducts] = useState<number[]>([]);
   const [bagItems, setBagItems] = useState<number[]>([]);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const selectedColor = mockProduct.colors[selectedColorIndex];
   // this is the image for thumbnails
   const [selectedImage, setSelectedImage] = useState(selectedColor.images[0]);
+
+  const searchParams = useSearchParams();
+  const activeCategory = searchParams.get("category") || "sale";
 
   const discountPrice = mockProduct.discount
     ? mockProduct.price * (1 - mockProduct.discount / 100)
@@ -99,20 +100,7 @@ const ProductPage = () => {
 
         <div className="relative w-full">
           {/* the sub nav bar */}
-          <div className="flex text-xl font-text bg-white justify-center py-4 gap-6 rounded-lg shadow-md">
-            {categories.map((item, index) => (
-              <button
-                key={item}
-                onClick={() => setActiveTab(index)}
-                className={`mx-10 py-1 transition-colors duration-100  ${index === activeTab
-                  ? 'text-[#9F78FF] border-b-2 border-[#9F78FF]'
-                  : 'text-gray-700 hover:text-purple-500'
-                  }`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
+          <SubNavbar activeCategory={activeCategory} />
         </div>
         {/* Product details */}
         <div className="mt-15 flex flex-col md:flex-row justify-center items-start gap-12 px-4 md:px-20">
