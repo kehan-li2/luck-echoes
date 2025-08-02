@@ -428,7 +428,7 @@ function handleInteraction(action) {
 // Fetch word of guidance from daily fortune and update guidance panel
 async function fetchGuidance() {
   try {
-    const res = await fetch("http://localhost:3000/api/users/pet/message");
+    const res = await fetch("http://luck-echoes-deploy.vercel.app/api/users/pet/message");
     const data = await res.json();
 
     if (res.ok) {

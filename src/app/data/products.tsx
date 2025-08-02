@@ -61,7 +61,7 @@ export const products = [
     discount: 25,
     name: "Crystal Calm Necklace",
     description: "A soothing amethyst pendant necklace for peace and clarity.",
-    pic: "/p6.jpg",
+    pic: "/sale1.png",
     category: "sale"
   },
   {
@@ -70,7 +70,7 @@ export const products = [
     discount: 15,
     name: "Midnight Charm Bracelet",
     description: "Features celestial charms on a soft blue cord, now at a special price.",
-    pic: "/p7.jpg",
+    pic: "/sale2.png",
     category: "sale"
   },
   {
@@ -79,7 +79,7 @@ export const products = [
     discount: 30,
     name: "Lavender Luxe Candle",
     description: "Relaxing candle with real lavender buds, 30% off for a limited time.",
-    pic: "/p8.jpg",
+    pic: "/sale4.png",
     category: "sale"
   },
   {
@@ -133,7 +133,7 @@ export const products = [
     discount: 0,
     name: "Moonphase PopSocket",
     description: "Functional grip featuring moon phase design in soft purple hues.",
-    pic: "/p14.jpg",
+    pic: "/pa3.png",
     category: "phone accessories"
   },
   {
@@ -142,7 +142,7 @@ export const products = [
     discount: 10,
     name: "Crystal Clear Phone Case",
     description: "Slim, durable case with pressed dried flowers and crystals inside.",
-    pic: "/p15.jpg",
+    pic: "/pa2.png",
     category: "phone accessories"
   },
   {
@@ -151,7 +151,7 @@ export const products = [
     discount: 0,
     name: "Mystic Charm Phone Strap",
     description: "Colorful beaded strap with small amulets for flair and function.",
-    pic: "/p16.jpg",
+    pic: "/pa1.png",
     category: "phone accessories"
   },
   {
@@ -160,7 +160,7 @@ export const products = [
     discount: 0,
     name: "Amethyst Cluster",
     description: "Known for calming energy, perfect for meditation or decor.",
-    pic: "/p17.jpg",
+    pic: "/crystal1.png",
     category: "crystals"
   },
   {
@@ -169,7 +169,7 @@ export const products = [
     discount: 0,
     name: "Clear Quartz Point",
     description: "Master healer stone, great for clarity and amplification.",
-    pic: "/p18.jpg",
+    pic: "/crystal2.png",
     category: "crystals"
   },
   {
@@ -178,7 +178,7 @@ export const products = [
     discount: 5,
     name: "Rose Quartz Heart",
     description: "Polished crystal in heart shape, symbol of love and compassion.",
-    pic: "/p19.jpg",
+    pic: "/crystal3.png",
     category: "crystals"
   },
   {
@@ -187,7 +187,7 @@ export const products = [
     discount: 0,
     name: "Citrine Tumbled Set",
     description: "Sunny citrine stones for energy, creativity, and confidence.",
-    pic: "/p20.jpg",
+    pic: "/crystal4.png",
     category: "crystals"
   },
   {
@@ -196,7 +196,7 @@ export const products = [
     discount: 0,
     name: "Tranquil Moon Candle",
     description: "Soothing vanilla and sandalwood blend in a frosted jar.",
-    pic: "/p21.jpg",
+    pic: "/candle2.png",
     category: "candles"
   },
   {
@@ -205,7 +205,7 @@ export const products = [
     discount: 10,
     name: "Rose Petal Candle",
     description: "Hand-poured soy wax candle with real rose petals inside.",
-    pic: "/p22.jpg",
+    pic: "/candle1.png",
     category: "candles"
   },
   {
@@ -214,7 +214,7 @@ export const products = [
     discount: 0,
     name: "Citrus Glow Candle",
     description: "Zesty and refreshing orange-lime blend for uplifted moods.",
-    pic: "/p23.jpg",
+    pic: "/candle3.png",
     category: "candles"
   }
   , {
@@ -223,16 +223,16 @@ export const products = [
     discount: 0,
     name: "Lavender Essential Oil",
     description: "Calming and versatile—perfect for stress relief and sleep.",
-    pic: "/p24.jpg",
+    pic: "/eo1.png",
     category: "essential oils"
   },
   {
     id: 25,
     price: 29,
     discount: 0,
-    name: "Eucalyptus Oil",
+    name: "Orange Oil",
     description: "Fresh scent with clearing properties—great for focus and breath.",
-    pic: "/p25.jpg",
+    pic: "/eo3.png",
     category: "essential oils"
   },
   {
@@ -241,7 +241,7 @@ export const products = [
     discount: 5,
     name: "Rose Geranium Oil",
     description: "Floral and balancing, ideal for skincare or aromatherapy.",
-    pic: "/p26.jpg",
+    pic: "/eo2.png",
     category: "essential oils"
   }
 
