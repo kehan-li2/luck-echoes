@@ -35,7 +35,7 @@ export async function GET() {
   const content = fortune.content;
 
 const match = content.match(
-  /\*\*Lucky Color:\*\*\s*(.*?)\s*\n\*\*Lucky Stone:\*\*\s*(.*?)\s*\n\*\*Guidance:\*\*\s*([\s\S]*?)\s*\n\*\*Love Score:\*\*\s*(\d+)\s*\n\*\*Work Score:\*\*\s*(\d+)\s*\n\*\*Study Score:\*\*\s*(\d+)/
+  /\*\*Lucky Color:\*\*\s*(.+?)\s*\r?\n\*\*Lucky Stone:\*\*\s*(.+?)\s*\r?\n\*\*Guidance:\*\*\s*([\s\S]+?)\s*\r?\n\*\*Love Score:\*\*\s*(\d+)\s*\r?\n\*\*Work Score:\*\*\s*(\d+)\s*\r?\n\*\*Study Score:\*\*\s*(\d+)/
 );
 
 
