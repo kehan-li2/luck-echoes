@@ -35,8 +35,9 @@ export async function GET() {
   const content = fortune.content;
 
 const match = content.match(
-  /Lucky Color:\s*(.*?)\s*Lucky Stone:\s*(.*?)\s*Guidance:\s*(.*?)\s*Love Score:\s*(\d+)\s*Work Score:\s*(\d+)\s*Study Score:\s*(\d+)/
+  /\*\*Lucky Color:\*\*\s*(.*?)\s*\n\*\*Lucky Stone:\*\*\s*(.*?)\s*\n\*\*Guidance:\*\*\s*([\s\S]*?)\s*\n\*\*Love Score:\*\*\s*(\d+)\s*\n\*\*Work Score:\*\*\s*(\d+)\s*\n\*\*Study Score:\*\*\s*(\d+)/
 );
+
 
   if (!match) {
     return NextResponse.json({ message: "Invalid fortune format" }, { status: 400 });
