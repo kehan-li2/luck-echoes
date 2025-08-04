@@ -45,9 +45,13 @@ const match = clean.match(
 );
 
 
-
+/*
   if (!match) {
     return NextResponse.json({ message: "Invalid fortune format" }, { status: 400 });
+  }
+*/
+ if (!match) {
+    return NextResponse.json({ message: "You're naturally confident today — let that shine! Trust your instincts and don’t be shy about stepping into the spotlight. When you stay true to yourself, great opportunities will come your way. Just remember to share your warmth with those around you" });
   }
 
   const [, luckyColor, luckyStone, guidance, love, work, study] = match;
